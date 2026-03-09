@@ -1,0 +1,17 @@
+1. Activate the 'swi' virtual environment with:
+   """
+   conda activate swi
+   """
+
+2. Then run the full code with:
+   """
+   python train.py -d wm -a resnet34 --epochs 20 -i 500
+   """
+   OR
+   """
+   python train.py -d wm -a resnet34 --epochs 100 -i 100
+   """
+   OR
+   """
+   python train.py -d wm -a resnet34 --epochs 100 -i 100 --seed 1
+   """

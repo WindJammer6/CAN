@@ -36,17 +36,35 @@ def main(args: argparse.Namespace):
     logger = CompleteLogger(args.log, args.phase)
     print(args)
 
+    # if args.seed is not None:
+    #     random.seed(args.seed)
+    #     torch.manual_seed(args.seed)
+    #     cudnn.deterministic = True
+    #     warnings.warn('You have chosen to seed training. '
+    #                   'This will turn on the CUDNN deterministic setting, '
+    #                   'which can slow down your training considerably! '
+    #                   'You may see unexpected behavior when restarting '
+    #                   'from checkpoints.')
+
+    # cudnn.benchmark = True
+
+    # By ChatGPT (in order to get fixed results based on the provided 'seed' argument)
     if args.seed is not None:
         random.seed(args.seed)
+        np.random.seed(args.seed)
         torch.manual_seed(args.seed)
+        torch.cuda.manual_seed(args.seed)
+        torch.cuda.manual_seed_all(args.seed)
         cudnn.deterministic = True
+        cudnn.benchmark = False
+        torch.use_deterministic_algorithms(True, warn_only=True)
         warnings.warn('You have chosen to seed training. '
                       'This will turn on the CUDNN deterministic setting, '
                       'which can slow down your training considerably! '
                       'You may see unexpected behavior when restarting '
                       'from checkpoints.')
-
-    cudnn.benchmark = True
+    else:
+        cudnn.benchmark = True
 
     # Data loading code
     weak_augment = utils.get_train_transform2(args.train_resizing, random_horizontal_flip=True)
@@ -190,8 +208,9 @@ def train(thresholding_module, source_train_iter: ForeverDataIterator,labeled_tr
 
     self_training_criterion = ConfidenceBasedSelfTrainingLoss(args.threshold).to(device)
     kl_criterion = KLDivergence(tau=2)
-    worst_case_estimation_criterion = WorstCaseEstimationLoss(args.eta_prime).to(device)
-    supcon_criterion = SupConLoss(temperature=0.07).to(device)
+    # worst_case_estimation_criterion = WorstCaseEstimationLoss(args.eta_prime).to(device)
+    # supcon_criterion = SupConLoss(temperature=0.07).to(device)
+    supcon_criterion = SupConLoss(temperature=0.05).to(device)
     # switch to train mode
     model.train()
 
@@ -251,7 +270,7 @@ def train(thresholding_module, source_train_iter: ForeverDataIterator,labeled_tr
 
         #self_training
         confidence, pseudo_labels = F.softmax(y_u.detach(), dim=1).max(dim=1)
-        warmup = (epoch<=5)   #-1,0,1,3,7,11,15,19
+        warmup = (epoch<=4)   #-1,0,1,3,7,11,15,19
         status = thresholding_module.get_threshold(confidence, pseudo_labels, warmup)
         dynamic_threshold = status['threshold']
         mask = (confidence > dynamic_threshold[pseudo_labels]).float()
@@ -265,7 +284,7 @@ def train(thresholding_module, source_train_iter: ForeverDataIterator,labeled_tr
         # x_ls_strong = torch.cat((x_l_strong, x_s_strong), dim=0)
         sampleloss_hard = (F.cross_entropy(y_u2, pseudo_labels, reduction='none') * mask).mean() + F.cross_entropy(y_s2, labels_s)
         sampleloss_soft = kl_criterion(y_s2, y_s_strong) + kl_criterion(y_u2, y_u_strong)
-        supconloss = (sampleloss_hard + sampleloss_soft) *0.5
+        supconloss = (sampleloss_hard + sampleloss_soft) * 1.5
 
         #cca
         feat_s_c, _ = feat_s_c
@@ -282,9 +301,9 @@ def train(thresholding_module, source_train_iter: ForeverDataIterator,labeled_tr
             (cls_loss_strong + self_training_loss).backward()
         else:
             (cls_loss_strong +supconloss+ self_training_loss).backward()
-        
+        # (cls_loss_strong +supconloss+ self_training_loss).backward()
 
-        # print(time.time()-start)s
+        # print(time.time()-start)
         # measure accuracy and record loss
         cls_loss = cls_loss_strong + cls_loss_weak
         cls_losses.update(cls_loss.item(), batch_size)
@@ -345,7 +364,7 @@ if __name__ == '__main__':
                         help='backbone architecture: ' + ' | '.join(utils.get_model_names()) + ' (default: resnet34)')
     parser.add_argument('--width', default=2048, type=int,
                         help='width of the pseudo head and the worst-case estimation head')
-    parser.add_argument('--bottleneck-dim', default=1024, type=int,
+    parser.add_argument('--bottleneck-dim', default=512, type=int,
                         help='dimension of bottleneck')
     parser.add_argument('--no-pool', action='store_true', default=False,
                         help='no pool layer after the feature extractor')
@@ -376,8 +395,10 @@ if __name__ == '__main__':
                         help='parameter for lr scheduler')
     parser.add_argument('--lr-decay', default=0.75, type=float,
                         help='parameter for lr scheduler')
-    parser.add_argument('--wd', '--weight-decay', default=5e-4, type=float, metavar='W',
-                        help='weight decay (default:5e-4)')
+    # parser.add_argument('--wd', '--weight-decay', default=5e-4, type=float, metavar='W',
+                        # help='weight decay (default:5e-4)')
+    parser.add_argument('--wd', '--weight-decay', default=5e-3, type=float, metavar='W',
+                        help='weight decay (default:5e-3)')
     parser.add_argument('-j', '--workers', default=4, type=int, metavar='N',
                         help='number of data loading workers (default: 4)')
     parser.add_argument('--epochs', default=90, type=int, metavar='N',

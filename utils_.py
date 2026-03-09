@@ -17,7 +17,7 @@ import timm
 from timm.data.auto_augment import auto_augment_transform, rand_augment_transform
 
 # sys.path.append('../../..')
-from classifier import Classifier
+from modules.classifier import Classifier
 import vision.datasets as datasets
 import vision.models as models
 from utils.metric import accuracy, ConfusionMatrix
@@ -287,7 +287,9 @@ def validate(val_loader, model, args, device, num_classes, threshold=None):
             target = target.to(device)
 
             # compute output
-            output, _ = model(images)
+            output = model(images)
+            if isinstance(output, (tuple, list)):
+                output = output[0]
             loss = F.cross_entropy(output, target)
 
             confidence, predicted = F.softmax(output.cpu(), dim=1).max(dim=1)
@@ -496,6 +498,9 @@ class ImageDataset2(Dataset):
     def __getitem__(self, index):
         img = self.data[index]
         img = Image.fromarray(img)
+        # Convert grayscale to RGB for models expecting 3 channels
+        if img.mode == 'L':
+            img = img.convert('RGB')
         target = self.local_classes[index]
 
         if self.transform is not None:

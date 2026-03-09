@@ -1,0 +1,587 @@
+Namespace(data='wm', num_samples_per_class=3, train_resizing='default', val_resizing='default', norm_mean=(0.485, 0.456, 0.406), norm_std=(0.229, 0.224, 0.225), auto_augment='rand-m10-n2-mstd2', arch='resnet34', width=2048, bottleneck_dim=512, no_pool=False, pretrained_backbone=None, finetune=False, trade_off_cls_strong=0.1, trade_off_self_training=1, eta=1, eta_prime=2, threshold=0.95, batch_size=32, lr=0.001, lr_scheduler='exp', lr_gamma=0.0002, lr_decay=0.75, wd=0.005, workers=4, epochs=100, iters_per_epoch=100, print_freq=100, seed=None, log='dst', phase='train')
+labeled_train_transform:  MultipleApply(
+    Compose(
+    RandomHorizontalFlip(p=0.5)
+    ToTensor()
+    Normalize(mean=[0.5], std=[0.5])
+)
+    Compose(
+    RandomHorizontalFlip(p=0.5)
+    RandAugment(n=2, ops=
+	AugmentOp(name=AutoContrast, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Equalize, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Invert, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Rotate, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Posterize, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Solarize, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=SolarizeAdd, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Color, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Contrast, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Brightness, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Sharpness, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=ShearX, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=ShearY, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=TranslateXRel, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=TranslateYRel, p=0.5, m=5, mstd=1.0))
+    ToTensor()
+    Normalize(mean=[0.5], std=[0.5])
+)
+)
+unlabeled_train_transform:  MultipleApply(
+    Compose(
+    RandomHorizontalFlip(p=0.5)
+    ToTensor()
+    Normalize(mean=[0.5], std=[0.5])
+)
+    Compose(
+    RandomHorizontalFlip(p=0.5)
+    RandAugment(n=2, ops=
+	AugmentOp(name=AutoContrast, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Equalize, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Invert, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Rotate, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Posterize, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Solarize, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=SolarizeAdd, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Color, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Contrast, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Brightness, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=Sharpness, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=ShearX, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=ShearY, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=TranslateXRel, p=0.5, m=5, mstd=1.0)
+	AugmentOp(name=TranslateYRel, p=0.5, m=5, mstd=1.0))
+    ToTensor()
+    Normalize(mean=[0.5], std=[0.5])
+)
+)
+val_transform: Compose(
+    RandomHorizontalFlip(p=0.5)
+    ToTensor()
+    Normalize(mean=[0.5], std=[0.5])
+)
+source_dataset_size:  172950
+target_dataset_size:  27
+target_dataset_unl_size:  7961
+target_dataset_val_size:  27
+Epoch: [0][  0/100]	Time 3.85 (3.85)	Data 0.0 (0.0)	Loss 12.46 (12.46)	Cls Loss 4.96 (4.96)	Self Training Loss 0.00 (0.00)	supconloss Loss 7.50 (7.50)	Cls Acc 14.8 (14.8)	Pseudo Label Acc 0.0 (0.0)	Pseudo Label Ratio 0.0 (0.0)
+tensor([0.6500, 0.6500, 0.6500, 0.6500, 0.6500, 0.6500, 0.6500, 0.6500, 0.6500],
+       device='cuda:0')
+ * Acc@1 70.370 Acc@5 100.000
+ * Acc@1 58.397 Acc@5 94.825
+Epoch: [1][  0/100]	Time 0.31 (0.31)	Data 0.2 (0.2)	Loss 10.51 (10.51)	Cls Loss 0.98 (0.98)	Self Training Loss 0.48 (0.48)	supconloss Loss 9.05 (9.05)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 70.0 (70.0)	Pseudo Label Ratio 31.2 (31.2)
+tensor([0.6500, 0.6500, 0.6500, 0.6500, 0.6500, 0.6500, 0.6500, 0.6500, 0.6500],
+       device='cuda:0')
+/home/jetwei/miniconda3/envs/swi/lib/python3.14/site-packages/sklearn/metrics/_classification.py:1833: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+ * Acc@1 74.074 Acc@5 100.000
+ * Acc@1 69.778 Acc@5 95.993
+Epoch: [2][  0/100]	Time 0.30 (0.30)	Data 0.2 (0.2)	Loss 11.71 (11.71)	Cls Loss 0.37 (0.37)	Self Training Loss 0.49 (0.49)	supconloss Loss 10.86 (10.86)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 100.0 (100.0)	Pseudo Label Ratio 53.1 (53.1)
+tensor([0.6500, 0.6531, 0.6531, 0.6500, 0.6500, 0.6500, 0.6500, 0.6500, 0.6500],
+       device='cuda:0')
+/home/jetwei/miniconda3/envs/swi/lib/python3.14/site-packages/sklearn/metrics/_classification.py:1833: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+ * Acc@1 74.074 Acc@5 100.000
+ * Acc@1 69.313 Acc@5 95.528
+Epoch: [3][  0/100]	Time 0.29 (0.29)	Data 0.2 (0.2)	Loss 12.53 (12.53)	Cls Loss 0.86 (0.86)	Self Training Loss 0.38 (0.38)	supconloss Loss 11.29 (11.29)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 94.7 (94.7)	Pseudo Label Ratio 59.4 (59.4)
+tensor([0.6500, 0.6500, 0.6500, 0.6828, 0.6500, 0.6828, 0.6500, 0.6828, 0.6828],
+       device='cuda:0')
+/home/jetwei/miniconda3/envs/swi/lib/python3.14/site-packages/sklearn/metrics/_classification.py:1833: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+ * Acc@1 70.370 Acc@5 96.296
+ * Acc@1 72.252 Acc@5 95.666
+Epoch: [4][  0/100]	Time 0.29 (0.29)	Data 0.2 (0.2)	Loss 12.60 (12.60)	Cls Loss 0.31 (0.31)	Self Training Loss 0.31 (0.31)	supconloss Loss 11.98 (11.98)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 70.0 (70.0)	Pseudo Label Ratio 62.5 (62.5)
+tensor([0.8016, 0.8016, 0.6500, 0.8016, 0.6500, 0.8016, 0.8016, 0.6500, 0.8016],
+       device='cuda:0')
+ * Acc@1 74.074 Acc@5 100.000
+ * Acc@1 70.556 Acc@5 95.377
+Epoch: [5][  0/100]	Time 0.41 (0.41)	Data 0.2 (0.2)	Loss 13.55 (13.55)	Cls Loss 0.19 (0.19)	Self Training Loss 0.68 (0.68)	supconloss Loss 12.68 (12.68)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 65.2 (65.2)	Pseudo Label Ratio 71.9 (71.9)
+tensor([0.7301, 0.7719, 0.6500, 0.6504, 0.7247, 0.7267, 0.6531, 0.6500, 0.7386],
+       device='cuda:0')
+/home/jetwei/miniconda3/envs/swi/lib/python3.14/site-packages/sklearn/metrics/_classification.py:1833: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 78.118 Acc@5 96.257
+Epoch: [6][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 5.90 (5.90)	Cls Loss 0.43 (0.43)	Self Training Loss 0.55 (0.55)	supconloss Loss 4.92 (4.92)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 87.5 (87.5)	Pseudo Label Ratio 75.0 (75.0)
+tensor([0.6696, 0.6500, 0.6500, 0.6500, 0.6872, 0.6918, 0.6515, 0.6500, 0.7422],
+       device='cuda:0')
+/home/jetwei/miniconda3/envs/swi/lib/python3.14/site-packages/sklearn/metrics/_classification.py:1833: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+ * Acc@1 74.074 Acc@5 100.000
+ * Acc@1 76.837 Acc@5 96.420
+Epoch: [7][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 6.30 (6.30)	Cls Loss 0.55 (0.55)	Self Training Loss 0.68 (0.68)	supconloss Loss 5.07 (5.07)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 88.5 (88.5)	Pseudo Label Ratio 81.2 (81.2)
+tensor([0.7048, 0.7542, 0.6994, 0.6625, 0.7679, 0.7308, 0.6884, 0.6666, 0.7719],
+       device='cuda:0')
+/home/jetwei/miniconda3/envs/swi/lib/python3.14/site-packages/sklearn/metrics/_classification.py:1833: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 81.975 Acc@5 97.073
+Epoch: [8][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 5.67 (5.67)	Cls Loss 0.29 (0.29)	Self Training Loss 0.68 (0.68)	supconloss Loss 4.70 (4.70)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 92.6 (92.6)	Pseudo Label Ratio 84.4 (84.4)
+tensor([0.6500, 0.7140, 0.6751, 0.6500, 0.7367, 0.6542, 0.6826, 0.6578, 0.7422],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 82.213 Acc@5 95.428
+Epoch: [9][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 5.72 (5.72)	Cls Loss 0.90 (0.90)	Self Training Loss 0.26 (0.26)	supconloss Loss 4.57 (4.57)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 92.6 (92.6)	Pseudo Label Ratio 84.4 (84.4)
+tensor([0.8436, 0.8493, 0.7524, 0.7410, 0.8609, 0.8255, 0.7859, 0.6535, 0.7957],
+       device='cuda:0')
+/home/jetwei/miniconda3/envs/swi/lib/python3.14/site-packages/sklearn/metrics/_classification.py:1833: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 81.083 Acc@5 98.216
+Epoch: [10][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 4.45 (4.45)	Cls Loss 0.27 (0.27)	Self Training Loss 0.29 (0.29)	supconloss Loss 3.88 (3.88)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 82.8 (82.8)	Pseudo Label Ratio 90.6 (90.6)
+tensor([0.8269, 0.8161, 0.6985, 0.7663, 0.8480, 0.8125, 0.8385, 0.8609, 0.7887],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 85.982 Acc@5 98.631
+Epoch: [11][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 4.32 (4.32)	Cls Loss 0.33 (0.33)	Self Training Loss 0.27 (0.27)	supconloss Loss 3.73 (3.73)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 96.7 (96.7)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.9030, 0.9447, 0.8859, 0.8871, 0.9430, 0.9500, 0.9183, 0.7620, 0.8910],
+       device='cuda:0')
+ * Acc@1 77.778 Acc@5 96.296
+ * Acc@1 84.386 Acc@5 96.332
+Epoch: [12][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 4.25 (4.25)	Cls Loss 0.24 (0.24)	Self Training Loss 0.25 (0.25)	supconloss Loss 3.76 (3.76)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.5 (93.5)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8334, 0.8609, 0.7872, 0.7696, 0.8380, 0.8319, 0.7177, 0.7817, 0.8173],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 83.846 Acc@5 99.209
+Epoch: [13][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 4.44 (4.44)	Cls Loss 0.19 (0.19)	Self Training Loss 0.39 (0.39)	supconloss Loss 3.87 (3.87)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 82.8 (82.8)	Pseudo Label Ratio 90.6 (90.6)
+tensor([0.9029, 0.9301, 0.8290, 0.8614, 0.9500, 0.8842, 0.9003, 0.8696, 0.8636],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 85.467 Acc@5 99.435
+Epoch: [14][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 4.80 (4.80)	Cls Loss 0.22 (0.22)	Self Training Loss 0.48 (0.48)	supconloss Loss 4.10 (4.10)	Cls Acc 96.3 (96.3)	Pseudo Label Acc 96.7 (96.7)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.7125, 0.6953, 0.6863, 0.6500, 0.6859, 0.6857, 0.6652, 0.6500, 0.6500],
+       device='cuda:0')
+ * Acc@1 96.296 Acc@5 100.000
+ * Acc@1 87.979 Acc@5 99.799
+Epoch: [15][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.62 (3.62)	Cls Loss 0.16 (0.16)	Self Training Loss 0.17 (0.17)	supconloss Loss 3.30 (3.30)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 83.3 (83.3)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.8621, 0.8418, 0.8143, 0.8534, 0.9203, 0.8462, 0.7862, 0.7501, 0.8380],
+       device='cuda:0')
+ * Acc@1 96.296 Acc@5 100.000
+ * Acc@1 89.273 Acc@5 99.900
+Epoch: [16][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 4.66 (4.66)	Cls Loss 0.23 (0.23)	Self Training Loss 0.36 (0.36)	supconloss Loss 4.07 (4.07)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.3 (93.3)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.8840, 0.9330, 0.8488, 0.8768, 0.9193, 0.9500, 0.9263, 0.9182, 0.9050],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 86.195 Acc@5 99.472
+Epoch: [17][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 4.67 (4.67)	Cls Loss 0.45 (0.45)	Self Training Loss 0.32 (0.32)	supconloss Loss 3.90 (3.90)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.3 (90.3)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.7683, 0.8313, 0.7210, 0.7584, 0.8231, 0.8179, 0.8051, 0.7083, 0.7510],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 87.275 Acc@5 99.799
+Epoch: [18][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.64 (3.64)	Cls Loss 0.13 (0.13)	Self Training Loss 0.18 (0.18)	supconloss Loss 3.33 (3.33)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 82.8 (82.8)	Pseudo Label Ratio 90.6 (90.6)
+tensor([0.7990, 0.8313, 0.8135, 0.7924, 0.8017, 0.7892, 0.7789, 0.7422, 0.7124],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 100.000
+ * Acc@1 87.552 Acc@5 99.862
+Epoch: [19][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 4.34 (4.34)	Cls Loss 0.28 (0.28)	Self Training Loss 0.26 (0.26)	supconloss Loss 3.80 (3.80)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.1 (93.1)	Pseudo Label Ratio 90.6 (90.6)
+tensor([0.9263, 0.9312, 0.8833, 0.8908, 0.9500, 0.9366, 0.9366, 0.7815, 0.8864],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 85.291 Acc@5 99.761
+Epoch: [20][  0/100]	Time 0.34 (0.34)	Data 0.2 (0.2)	Loss 4.46 (4.46)	Cls Loss 0.28 (0.28)	Self Training Loss 0.32 (0.32)	supconloss Loss 3.86 (3.86)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 84.4 (84.4)	Pseudo Label Ratio 100.0 (100.0)
+tensor([0.7984, 0.8609, 0.8319, 0.8403, 0.8532, 0.8602, 0.8260, 0.6824, 0.7494],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 86.333 Acc@5 99.849
+Epoch: [21][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.49 (3.49)	Cls Loss 0.17 (0.17)	Self Training Loss 0.17 (0.17)	supconloss Loss 3.15 (3.15)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.5 (93.5)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.9095, 0.8488, 0.7965, 0.8255, 0.9203, 0.9012, 0.9171, 0.6500, 0.8455],
+       device='cuda:0')
+ * Acc@1 77.778 Acc@5 100.000
+ * Acc@1 85.341 Acc@5 99.900
+Epoch: [22][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 5.42 (5.42)	Cls Loss 0.44 (0.44)	Self Training Loss 0.43 (0.43)	supconloss Loss 4.54 (4.54)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 89.7 (89.7)	Pseudo Label Ratio 90.6 (90.6)
+tensor([0.8567, 0.8906, 0.8023, 0.8253, 0.8615, 0.8563, 0.8569, 0.7329, 0.8204],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 96.296
+ * Acc@1 85.831 Acc@5 99.070
+Epoch: [23][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 4.03 (4.03)	Cls Loss 0.25 (0.25)	Self Training Loss 0.28 (0.28)	supconloss Loss 3.51 (3.51)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.3 (90.3)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8097, 0.8273, 0.7650, 0.7281, 0.8313, 0.8140, 0.7690, 0.7026, 0.7087],
+       device='cuda:0')
+ * Acc@1 70.370 Acc@5 100.000
+ * Acc@1 83.871 Acc@5 99.648
+Epoch: [24][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 4.30 (4.30)	Cls Loss 0.42 (0.42)	Self Training Loss 0.17 (0.17)	supconloss Loss 3.72 (3.72)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.0 (90.0)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.8414, 0.8609, 0.8541, 0.7501, 0.8562, 0.8561, 0.7859, 0.7202, 0.8143],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 85.605 Acc@5 99.246
+Epoch: [25][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.90 (3.90)	Cls Loss 0.18 (0.18)	Self Training Loss 0.28 (0.28)	supconloss Loss 3.44 (3.44)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 96.8 (96.8)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.7856, 0.9035, 0.7972, 0.8354, 0.9179, 0.8754, 0.9203, 0.8664, 0.8728],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 86.874 Acc@5 99.661
+Epoch: [26][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.82 (3.82)	Cls Loss 0.26 (0.26)	Self Training Loss 0.13 (0.13)	supconloss Loss 3.42 (3.42)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 83.3 (83.3)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.9156, 0.9203, 0.8861, 0.8747, 0.8959, 0.9132, 0.9175, 0.7318, 0.8754],
+       device='cuda:0')
+ * Acc@1 92.593 Acc@5 96.296
+ * Acc@1 89.084 Acc@5 99.485
+Epoch: [27][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.52 (3.52)	Cls Loss 0.21 (0.21)	Self Training Loss 0.07 (0.07)	supconloss Loss 3.24 (3.24)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.3 (93.3)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.8609, 0.8497, 0.7915, 0.7475, 0.8340, 0.8149, 0.8102, 0.7753, 0.8122],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 86.158 Acc@5 99.560
+Epoch: [28][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.36 (3.36)	Cls Loss 0.21 (0.21)	Self Training Loss 0.10 (0.10)	supconloss Loss 3.05 (3.05)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 88.9 (88.9)	Pseudo Label Ratio 84.4 (84.4)
+tensor([0.8804, 0.9056, 0.7994, 0.8452, 0.8425, 0.9203, 0.8421, 0.8716, 0.8703],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 86.522 Acc@5 99.799
+Epoch: [29][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.90 (3.90)	Cls Loss 0.38 (0.38)	Self Training Loss 0.11 (0.11)	supconloss Loss 3.42 (3.42)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.5 (93.5)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8665, 0.8844, 0.7969, 0.8515, 0.8906, 0.8380, 0.8715, 0.7830, 0.8723],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 100.000
+ * Acc@1 88.444 Acc@5 99.812
+Epoch: [30][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 4.30 (4.30)	Cls Loss 0.32 (0.32)	Self Training Loss 0.31 (0.31)	supconloss Loss 3.67 (3.67)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 86.7 (86.7)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.8764, 0.8548, 0.8499, 0.9077, 0.8858, 0.8940, 0.9203, 0.8102, 0.9054],
+       device='cuda:0')
+ * Acc@1 92.593 Acc@5 96.296
+ * Acc@1 87.338 Acc@5 99.510
+Epoch: [31][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 4.78 (4.78)	Cls Loss 0.60 (0.60)	Self Training Loss 0.32 (0.32)	supconloss Loss 3.87 (3.87)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.3 (90.3)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.7794, 0.7825, 0.7520, 0.7022, 0.7842, 0.7016, 0.8016, 0.6500, 0.7557],
+       device='cuda:0')
+ * Acc@1 77.778 Acc@5 100.000
+ * Acc@1 86.585 Acc@5 99.648
+Epoch: [32][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 4.71 (4.71)	Cls Loss 0.39 (0.39)	Self Training Loss 0.41 (0.41)	supconloss Loss 3.91 (3.91)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 80.0 (80.0)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.9067, 0.9061, 0.8448, 0.8816, 0.9203, 0.8742, 0.8950, 0.7571, 0.8652],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 100.000
+ * Acc@1 86.786 Acc@5 99.874
+Epoch: [33][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.22 (3.22)	Cls Loss 0.11 (0.11)	Self Training Loss 0.20 (0.20)	supconloss Loss 2.91 (2.91)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.3 (90.3)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8876, 0.9155, 0.8346, 0.7774, 0.9203, 0.8629, 0.8780, 0.8665, 0.8495],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 86.484 Acc@5 99.862
+Epoch: [34][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 4.25 (4.25)	Cls Loss 0.24 (0.24)	Self Training Loss 0.37 (0.37)	supconloss Loss 3.64 (3.64)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 83.3 (83.3)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.8382, 0.8906, 0.7324, 0.8178, 0.8850, 0.7850, 0.8889, 0.8762, 0.8251],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 100.000
+ * Acc@1 89.185 Acc@5 99.749
+Epoch: [35][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.90 (3.90)	Cls Loss 0.19 (0.19)	Self Training Loss 0.31 (0.31)	supconloss Loss 3.40 (3.40)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 84.4 (84.4)	Pseudo Label Ratio 100.0 (100.0)
+tensor([0.9500, 0.9433, 0.8873, 0.9118, 0.9291, 0.8805, 0.8425, 0.7711, 0.8465],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 96.296
+ * Acc@1 85.680 Acc@5 99.133
+Epoch: [36][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.30 (3.30)	Cls Loss 0.09 (0.09)	Self Training Loss 0.14 (0.14)	supconloss Loss 3.07 (3.07)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 86.7 (86.7)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.8088, 0.7929, 0.7896, 0.8227, 0.8313, 0.7753, 0.8167, 0.7053, 0.8189],
+       device='cuda:0')
+ * Acc@1 92.593 Acc@5 100.000
+ * Acc@1 90.127 Acc@5 99.648
+Epoch: [37][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.32 (3.32)	Cls Loss 0.17 (0.17)	Self Training Loss 0.09 (0.09)	supconloss Loss 3.06 (3.06)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 96.6 (96.6)	Pseudo Label Ratio 90.6 (90.6)
+tensor([0.7861, 0.7781, 0.7557, 0.7149, 0.8186, 0.7848, 0.8313, 0.7138, 0.7762],
+       device='cuda:0')
+ * Acc@1 77.778 Acc@5 100.000
+ * Acc@1 81.912 Acc@5 98.983
+Epoch: [38][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 4.04 (4.04)	Cls Loss 0.26 (0.26)	Self Training Loss 0.32 (0.32)	supconloss Loss 3.45 (3.45)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 76.7 (76.7)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.8376, 0.8787, 0.8439, 0.8752, 0.9203, 0.8826, 0.9155, 0.7354, 0.8617],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 86.258 Acc@5 99.812
+Epoch: [39][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.35 (3.35)	Cls Loss 0.09 (0.09)	Self Training Loss 0.15 (0.15)	supconloss Loss 3.11 (3.11)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 100.0 (100.0)	Pseudo Label Ratio 100.0 (100.0)
+tensor([0.8240, 0.8591, 0.8070, 0.7911, 0.8609, 0.7663, 0.8416, 0.7635, 0.7961],
+       device='cuda:0')
+ * Acc@1 77.778 Acc@5 100.000
+ * Acc@1 85.303 Acc@5 99.673
+Epoch: [40][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.16 (3.16)	Cls Loss 0.11 (0.11)	Self Training Loss 0.07 (0.07)	supconloss Loss 2.98 (2.98)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 85.7 (85.7)	Pseudo Label Ratio 87.5 (87.5)
+tensor([0.8058, 0.8275, 0.8473, 0.7963, 0.8609, 0.8172, 0.8367, 0.7263, 0.7975],
+       device='cuda:0')
+ * Acc@1 92.593 Acc@5 96.296
+ * Acc@1 86.974 Acc@5 99.560
+Epoch: [41][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.36 (3.36)	Cls Loss 0.09 (0.09)	Self Training Loss 0.17 (0.17)	supconloss Loss 3.10 (3.10)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.5 (93.5)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8414, 0.8618, 0.8459, 0.8460, 0.8906, 0.8632, 0.8578, 0.8026, 0.8582],
+       device='cuda:0')
+ * Acc@1 77.778 Acc@5 100.000
+ * Acc@1 85.517 Acc@5 99.824
+Epoch: [42][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 4.37 (4.37)	Cls Loss 0.48 (0.48)	Self Training Loss 0.17 (0.17)	supconloss Loss 3.72 (3.72)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.1 (93.1)	Pseudo Label Ratio 90.6 (90.6)
+tensor([0.8512, 0.9177, 0.9044, 0.8290, 0.9203, 0.8663, 0.8849, 0.8565, 0.8656],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 100.000
+ * Acc@1 88.142 Acc@5 99.686
+Epoch: [43][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 2.75 (2.75)	Cls Loss 0.06 (0.06)	Self Training Loss 0.06 (0.06)	supconloss Loss 2.64 (2.64)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 96.7 (96.7)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.9195, 0.9387, 0.9369, 0.9065, 0.9500, 0.8807, 0.9294, 0.8516, 0.9249],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 100.000
+ * Acc@1 87.275 Acc@5 99.510
+Epoch: [44][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.98 (3.98)	Cls Loss 0.36 (0.36)	Self Training Loss 0.19 (0.19)	supconloss Loss 3.42 (3.42)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 83.3 (83.3)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.9413, 0.9338, 0.9243, 0.8183, 0.9473, 0.9050, 0.9500, 0.9250, 0.9106],
+       device='cuda:0')
+ * Acc@1 96.296 Acc@5 100.000
+ * Acc@1 88.042 Acc@5 99.573
+Epoch: [45][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.63 (3.63)	Cls Loss 0.20 (0.20)	Self Training Loss 0.20 (0.20)	supconloss Loss 3.23 (3.23)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 83.9 (83.9)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8928, 0.8758, 0.8816, 0.7968, 0.9203, 0.8808, 0.8842, 0.8733, 0.8785],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 87.476 Acc@5 98.392
+Epoch: [46][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.20 (3.20)	Cls Loss 0.20 (0.20)	Self Training Loss 0.07 (0.07)	supconloss Loss 2.93 (2.93)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 83.9 (83.9)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8648, 0.8765, 0.8127, 0.7696, 0.8906, 0.8412, 0.8743, 0.7143, 0.8295],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 86.924 Acc@5 98.719
+Epoch: [47][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.80 (3.80)	Cls Loss 0.18 (0.18)	Self Training Loss 0.20 (0.20)	supconloss Loss 3.42 (3.42)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 83.9 (83.9)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8240, 0.8271, 0.8101, 0.8068, 0.8609, 0.7477, 0.8495, 0.7840, 0.8002],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 96.296
+ * Acc@1 85.241 Acc@5 98.719
+Epoch: [48][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.80 (3.80)	Cls Loss 0.28 (0.28)	Self Training Loss 0.09 (0.09)	supconloss Loss 3.43 (3.43)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 83.3 (83.3)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.7447, 0.7719, 0.7333, 0.6982, 0.7668, 0.7517, 0.7602, 0.7540, 0.6920],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 96.296
+ * Acc@1 86.685 Acc@5 99.824
+Epoch: [49][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.05 (3.05)	Cls Loss 0.06 (0.06)	Self Training Loss 0.18 (0.18)	supconloss Loss 2.81 (2.81)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.6 (90.6)	Pseudo Label Ratio 100.0 (100.0)
+tensor([0.9254, 0.9366, 0.9130, 0.8807, 0.9294, 0.9500, 0.9414, 0.8918, 0.8690],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 87.414 Acc@5 99.749
+Epoch: [50][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.87 (3.87)	Cls Loss 0.33 (0.33)	Self Training Loss 0.18 (0.18)	supconloss Loss 3.36 (3.36)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 89.7 (89.7)	Pseudo Label Ratio 90.6 (90.6)
+tensor([0.8831, 0.9147, 0.8956, 0.8551, 0.9471, 0.9500, 0.9136, 0.8570, 0.8901],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 83.306 Acc@5 98.656
+Epoch: [51][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 4.36 (4.36)	Cls Loss 0.55 (0.55)	Self Training Loss 0.11 (0.11)	supconloss Loss 3.70 (3.70)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.3 (93.3)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.8811, 0.9187, 0.8491, 0.8777, 0.9203, 0.9163, 0.9160, 0.8091, 0.8835],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 87.074 Acc@5 99.786
+Epoch: [52][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.38 (3.38)	Cls Loss 0.27 (0.27)	Self Training Loss 0.08 (0.08)	supconloss Loss 3.04 (3.04)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 86.7 (86.7)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.8432, 0.8574, 0.8395, 0.8147, 0.8609, 0.7620, 0.8252, 0.8197, 0.8066],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 87.954 Acc@5 99.460
+Epoch: [53][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.43 (3.43)	Cls Loss 0.23 (0.23)	Self Training Loss 0.02 (0.02)	supconloss Loss 3.18 (3.18)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.3 (93.3)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.8769, 0.9122, 0.8888, 0.8968, 0.9203, 0.9129, 0.9043, 0.7523, 0.8985],
+       device='cuda:0')
+ * Acc@1 74.074 Acc@5 100.000
+ * Acc@1 82.640 Acc@5 99.171
+Epoch: [54][  0/100]	Time 0.34 (0.34)	Data 0.2 (0.2)	Loss 2.97 (2.97)	Cls Loss 0.05 (0.05)	Self Training Loss 0.13 (0.13)	supconloss Loss 2.79 (2.79)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 80.6 (80.6)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8372, 0.8440, 0.8375, 0.7823, 0.8556, 0.8375, 0.8609, 0.7402, 0.7889],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 85.969 Acc@5 98.329
+Epoch: [55][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.99 (3.99)	Cls Loss 0.23 (0.23)	Self Training Loss 0.29 (0.29)	supconloss Loss 3.48 (3.48)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.3 (93.3)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.8715, 0.8626, 0.8369, 0.8508, 0.8773, 0.8526, 0.8906, 0.7242, 0.8679],
+       device='cuda:0')
+ * Acc@1 77.778 Acc@5 96.296
+ * Acc@1 85.052 Acc@5 99.334
+Epoch: [56][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.50 (3.50)	Cls Loss 0.30 (0.30)	Self Training Loss 0.05 (0.05)	supconloss Loss 3.15 (3.15)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 87.1 (87.1)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.9002, 0.8507, 0.8466, 0.8825, 0.9203, 0.8596, 0.9096, 0.8056, 0.8303],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 85.555 Acc@5 99.158
+Epoch: [57][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 4.45 (4.45)	Cls Loss 0.67 (0.67)	Self Training Loss 0.22 (0.22)	supconloss Loss 3.57 (3.57)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 84.4 (84.4)	Pseudo Label Ratio 100.0 (100.0)
+tensor([0.9077, 0.9188, 0.8613, 0.8774, 0.9169, 0.9136, 0.9203, 0.8540, 0.8564],
+       device='cuda:0')
+ * Acc@1 77.778 Acc@5 100.000
+ * Acc@1 86.999 Acc@5 99.510
+Epoch: [58][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 4.27 (4.27)	Cls Loss 0.28 (0.28)	Self Training Loss 0.30 (0.30)	supconloss Loss 3.69 (3.69)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.6 (90.6)	Pseudo Label Ratio 100.0 (100.0)
+tensor([0.8778, 0.8962, 0.8999, 0.8728, 0.9088, 0.8940, 0.9203, 0.8213, 0.8486],
+       device='cuda:0')
+ * Acc@1 77.778 Acc@5 100.000
+ * Acc@1 84.638 Acc@5 98.543
+Epoch: [59][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.28 (3.28)	Cls Loss 0.28 (0.28)	Self Training Loss 0.03 (0.03)	supconloss Loss 2.98 (2.98)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 83.3 (83.3)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.8650, 0.8927, 0.8516, 0.8777, 0.9203, 0.9186, 0.9131, 0.8744, 0.8529],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 85.881 Acc@5 98.317
+Epoch: [60][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.33 (3.33)	Cls Loss 0.09 (0.09)	Self Training Loss 0.29 (0.29)	supconloss Loss 2.95 (2.95)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.5 (93.5)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8318, 0.8639, 0.8422, 0.8536, 0.8801, 0.8559, 0.8906, 0.8388, 0.8505],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 100.000
+ * Acc@1 84.587 Acc@5 97.940
+Epoch: [61][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.72 (3.72)	Cls Loss 0.07 (0.07)	Self Training Loss 0.34 (0.34)	supconloss Loss 3.30 (3.30)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.6 (90.6)	Pseudo Label Ratio 100.0 (100.0)
+tensor([0.8295, 0.8515, 0.8475, 0.8204, 0.8609, 0.8016, 0.8523, 0.7999, 0.7620],
+       device='cuda:0')
+ * Acc@1 92.593 Acc@5 96.296
+ * Acc@1 88.105 Acc@5 99.171
+Epoch: [62][  0/100]	Time 0.78 (0.78)	Data 0.6 (0.6)	Loss 2.98 (2.98)	Cls Loss 0.09 (0.09)	Self Training Loss 0.13 (0.13)	supconloss Loss 2.76 (2.76)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 80.6 (80.6)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8685, 0.9194, 0.8986, 0.9213, 0.9482, 0.9261, 0.9500, 0.9095, 0.9104],
+       device='cuda:0')
+ * Acc@1 70.370 Acc@5 100.000
+ * Acc@1 82.540 Acc@5 98.380
+Epoch: [63][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 4.99 (4.99)	Cls Loss 0.59 (0.59)	Self Training Loss 0.24 (0.24)	supconloss Loss 4.15 (4.15)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 83.3 (83.3)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.8383, 0.8868, 0.8510, 0.8353, 0.8906, 0.8824, 0.8787, 0.7768, 0.8716],
+       device='cuda:0')
+ * Acc@1 74.074 Acc@5 100.000
+ * Acc@1 85.014 Acc@5 98.568
+Epoch: [64][  0/100]	Time 0.34 (0.34)	Data 0.2 (0.2)	Loss 3.83 (3.83)	Cls Loss 0.14 (0.14)	Self Training Loss 0.27 (0.27)	supconloss Loss 3.43 (3.43)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 83.3 (83.3)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.9055, 0.9237, 0.8492, 0.8694, 0.9500, 0.9264, 0.9443, 0.8333, 0.9322],
+       device='cuda:0')
+ * Acc@1 92.593 Acc@5 100.000
+ * Acc@1 87.615 Acc@5 98.555
+Epoch: [65][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.19 (3.19)	Cls Loss 0.13 (0.13)	Self Training Loss 0.16 (0.16)	supconloss Loss 2.90 (2.90)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.0 (90.0)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.8559, 0.9197, 0.8473, 0.8950, 0.8832, 0.9156, 0.9203, 0.8647, 0.8966],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 83.181 Acc@5 99.686
+Epoch: [66][  0/100]	Time 0.34 (0.34)	Data 0.2 (0.2)	Loss 4.00 (4.00)	Cls Loss 0.14 (0.14)	Self Training Loss 0.31 (0.31)	supconloss Loss 3.56 (3.56)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 77.4 (77.4)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.9187, 0.9120, 0.7717, 0.8901, 0.9203, 0.9031, 0.8996, 0.7656, 0.8921],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 85.153 Acc@5 99.171
+Epoch: [67][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.02 (3.02)	Cls Loss 0.05 (0.05)	Self Training Loss 0.10 (0.10)	supconloss Loss 2.87 (2.87)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.3 (90.3)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8159, 0.8609, 0.8454, 0.8072, 0.8059, 0.8330, 0.8453, 0.8554, 0.8426],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 86.472 Acc@5 99.347
+Epoch: [68][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.36 (3.36)	Cls Loss 0.19 (0.19)	Self Training Loss 0.16 (0.16)	supconloss Loss 3.00 (3.00)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 80.6 (80.6)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8758, 0.8804, 0.9065, 0.8533, 0.9203, 0.9051, 0.9165, 0.7346, 0.8707],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 100.000
+ * Acc@1 88.444 Acc@5 98.694
+Epoch: [69][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.38 (3.38)	Cls Loss 0.08 (0.08)	Self Training Loss 0.16 (0.16)	supconloss Loss 3.14 (3.14)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.3 (90.3)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.9157, 0.9202, 0.7943, 0.8786, 0.9066, 0.8919, 0.9203, 0.7841, 0.8551],
+       device='cuda:0')
+ * Acc@1 96.296 Acc@5 100.000
+ * Acc@1 88.594 Acc@5 98.744
+Epoch: [70][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.09 (3.09)	Cls Loss 0.11 (0.11)	Self Training Loss 0.17 (0.17)	supconloss Loss 2.81 (2.81)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.5 (93.5)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8928, 0.8905, 0.7504, 0.8989, 0.9162, 0.9065, 0.9203, 0.8809, 0.8614],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 100.000
+ * Acc@1 87.552 Acc@5 98.543
+Epoch: [71][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.56 (3.56)	Cls Loss 0.22 (0.22)	Self Training Loss 0.11 (0.11)	supconloss Loss 3.23 (3.23)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.5 (93.5)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8404, 0.8388, 0.8507, 0.7578, 0.7906, 0.8123, 0.8609, 0.8199, 0.7388],
+       device='cuda:0')
+ * Acc@1 81.481 Acc@5 100.000
+ * Acc@1 84.851 Acc@5 99.020
+Epoch: [72][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 2.81 (2.81)	Cls Loss 0.05 (0.05)	Self Training Loss 0.05 (0.05)	supconloss Loss 2.71 (2.71)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 96.6 (96.6)	Pseudo Label Ratio 90.6 (90.6)
+tensor([0.8861, 0.8926, 0.8094, 0.8490, 0.9203, 0.8907, 0.9146, 0.8522, 0.8795],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 88.506 Acc@5 99.347
+Epoch: [73][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.16 (3.16)	Cls Loss 0.20 (0.20)	Self Training Loss 0.07 (0.07)	supconloss Loss 2.89 (2.89)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 96.7 (96.7)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.8494, 0.8776, 0.8534, 0.8906, 0.8748, 0.8372, 0.8886, 0.8878, 0.8238],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 89.825 Acc@5 99.384
+Epoch: [74][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.63 (3.63)	Cls Loss 0.22 (0.22)	Self Training Loss 0.17 (0.17)	supconloss Loss 3.24 (3.24)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 100.0 (100.0)	Pseudo Label Ratio 90.6 (90.6)
+tensor([0.9098, 0.8979, 0.8096, 0.8560, 0.9203, 0.8506, 0.9062, 0.8313, 0.8598],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 88.795 Acc@5 99.824
+Epoch: [75][  0/100]	Time 0.35 (0.35)	Data 0.2 (0.2)	Loss 3.19 (3.19)	Cls Loss 0.21 (0.21)	Self Training Loss 0.03 (0.03)	supconloss Loss 2.95 (2.95)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.5 (93.5)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8500, 0.8848, 0.8707, 0.8099, 0.8858, 0.8861, 0.8906, 0.8596, 0.8014],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 100.000
+ * Acc@1 90.730 Acc@5 98.882
+Epoch: [76][  0/100]	Time 0.34 (0.34)	Data 0.2 (0.2)	Loss 3.23 (3.23)	Cls Loss 0.14 (0.14)	Self Training Loss 0.09 (0.09)	supconloss Loss 3.00 (3.00)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 100.0 (100.0)	Pseudo Label Ratio 100.0 (100.0)
+tensor([0.9203, 0.8946, 0.8747, 0.8939, 0.9172, 0.8736, 0.9047, 0.8401, 0.8896],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 100.000
+ * Acc@1 86.798 Acc@5 99.146
+Epoch: [77][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.96 (3.96)	Cls Loss 0.18 (0.18)	Self Training Loss 0.46 (0.46)	supconloss Loss 3.32 (3.32)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.3 (90.3)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8205, 0.8218, 0.7922, 0.7560, 0.8313, 0.7713, 0.8142, 0.7332, 0.7725],
+       device='cuda:0')
+ * Acc@1 92.593 Acc@5 100.000
+ * Acc@1 90.956 Acc@5 99.498
+Epoch: [78][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.71 (3.71)	Cls Loss 0.22 (0.22)	Self Training Loss 0.30 (0.30)	supconloss Loss 3.19 (3.19)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.1 (93.1)	Pseudo Label Ratio 90.6 (90.6)
+tensor([0.9366, 0.9189, 0.8741, 0.9126, 0.9500, 0.9273, 0.9475, 0.8580, 0.9269],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 100.000
+ * Acc@1 89.461 Acc@5 99.246
+Epoch: [79][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.41 (3.41)	Cls Loss 0.22 (0.22)	Self Training Loss 0.05 (0.05)	supconloss Loss 3.14 (3.14)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.5 (93.5)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8941, 0.9131, 0.8756, 0.8709, 0.9203, 0.9021, 0.9110, 0.8934, 0.8624],
+       device='cuda:0')
+ * Acc@1 92.593 Acc@5 100.000
+ * Acc@1 89.737 Acc@5 99.435
+Epoch: [80][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.48 (3.48)	Cls Loss 0.24 (0.24)	Self Training Loss 0.09 (0.09)	supconloss Loss 3.15 (3.15)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 87.1 (87.1)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8405, 0.8739, 0.8637, 0.8216, 0.8785, 0.8578, 0.8906, 0.8220, 0.8421],
+       device='cuda:0')
+ * Acc@1 92.593 Acc@5 100.000
+ * Acc@1 87.476 Acc@5 99.196
+Epoch: [81][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.97 (3.97)	Cls Loss 0.32 (0.32)	Self Training Loss 0.20 (0.20)	supconloss Loss 3.44 (3.44)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 93.3 (93.3)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.9177, 0.8901, 0.8517, 0.8966, 0.9203, 0.8966, 0.9137, 0.8696, 0.8608],
+       device='cuda:0')
+ * Acc@1 96.296 Acc@5 100.000
+ * Acc@1 90.139 Acc@5 99.209
+Epoch: [82][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.07 (3.07)	Cls Loss 0.10 (0.10)	Self Training Loss 0.16 (0.16)	supconloss Loss 2.81 (2.81)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 87.1 (87.1)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.9314, 0.9500, 0.9239, 0.9411, 0.9289, 0.9446, 0.9319, 0.8632, 0.9131],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 89.084 Acc@5 98.568
+Epoch: [83][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.54 (3.54)	Cls Loss 0.08 (0.08)	Self Training Loss 0.28 (0.28)	supconloss Loss 3.18 (3.18)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 89.7 (89.7)	Pseudo Label Ratio 90.6 (90.6)
+tensor([0.8886, 0.8906, 0.8025, 0.8759, 0.8690, 0.8465, 0.8782, 0.7582, 0.8642],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 100.000
+ * Acc@1 88.795 Acc@5 99.020
+Epoch: [84][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.40 (3.40)	Cls Loss 0.14 (0.14)	Self Training Loss 0.16 (0.16)	supconloss Loss 3.10 (3.10)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 76.7 (76.7)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.9078, 0.9097, 0.8319, 0.8936, 0.9203, 0.8913, 0.9144, 0.8622, 0.8568],
+       device='cuda:0')
+ * Acc@1 92.593 Acc@5 100.000
+ * Acc@1 91.722 Acc@5 99.246
+Epoch: [85][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 2.76 (2.76)	Cls Loss 0.07 (0.07)	Self Training Loss 0.04 (0.04)	supconloss Loss 2.65 (2.65)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 100.0 (100.0)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.8609, 0.8513, 0.7917, 0.8099, 0.8467, 0.8371, 0.7847, 0.7588, 0.8088],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 89.109 Acc@5 99.410
+Epoch: [86][  0/100]	Time 0.34 (0.34)	Data 0.2 (0.2)	Loss 3.00 (3.00)	Cls Loss 0.07 (0.07)	Self Training Loss 0.19 (0.19)	supconloss Loss 2.75 (2.75)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 96.8 (96.8)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8705, 0.8848, 0.7919, 0.8381, 0.8764, 0.8407, 0.8906, 0.7301, 0.8362],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 89.323 Acc@5 99.485
+Epoch: [87][  0/100]	Time 0.34 (0.34)	Data 0.2 (0.2)	Loss 3.20 (3.20)	Cls Loss 0.24 (0.24)	Self Training Loss 0.14 (0.14)	supconloss Loss 2.82 (2.82)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.6 (90.6)	Pseudo Label Ratio 100.0 (100.0)
+tensor([0.9203, 0.9203, 0.7707, 0.8560, 0.9175, 0.8283, 0.9193, 0.7640, 0.8845],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 90.391 Acc@5 99.372
+Epoch: [88][  0/100]	Time 0.34 (0.34)	Data 0.2 (0.2)	Loss 3.38 (3.38)	Cls Loss 0.21 (0.21)	Self Training Loss 0.10 (0.10)	supconloss Loss 3.07 (3.07)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.3 (90.3)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.9122, 0.9203, 0.8284, 0.8651, 0.9201, 0.9025, 0.8954, 0.7974, 0.8573],
+       device='cuda:0')
+ * Acc@1 92.593 Acc@5 100.000
+ * Acc@1 91.609 Acc@5 98.782
+Epoch: [89][  0/100]	Time 0.34 (0.34)	Data 0.2 (0.2)	Loss 3.26 (3.26)	Cls Loss 0.23 (0.23)	Self Training Loss 0.08 (0.08)	supconloss Loss 2.95 (2.95)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 96.9 (96.9)	Pseudo Label Ratio 100.0 (100.0)
+tensor([0.9328, 0.9496, 0.8949, 0.8561, 0.9500, 0.9237, 0.9348, 0.9049, 0.8637],
+       device='cuda:0')
+ * Acc@1 92.593 Acc@5 100.000
+ * Acc@1 90.893 Acc@5 98.694
+Epoch: [90][  0/100]	Time 0.34 (0.34)	Data 0.2 (0.2)	Loss 3.22 (3.22)	Cls Loss 0.19 (0.19)	Self Training Loss 0.10 (0.10)	supconloss Loss 2.94 (2.94)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 96.8 (96.8)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8708, 0.8897, 0.8584, 0.8251, 0.9184, 0.7755, 0.9203, 0.7296, 0.8493],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 96.296
+ * Acc@1 84.437 Acc@5 97.953
+Epoch: [91][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.39 (3.39)	Cls Loss 0.16 (0.16)	Self Training Loss 0.13 (0.13)	supconloss Loss 3.09 (3.09)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 86.7 (86.7)	Pseudo Label Ratio 93.8 (93.8)
+tensor([0.9334, 0.9499, 0.8693, 0.9127, 0.9500, 0.9135, 0.9424, 0.8830, 0.9277],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 100.000
+ * Acc@1 89.976 Acc@5 98.844
+Epoch: [92][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.30 (3.30)	Cls Loss 0.11 (0.11)	Self Training Loss 0.13 (0.13)	supconloss Loss 3.06 (3.06)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.3 (90.3)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.9463, 0.9383, 0.8415, 0.9079, 0.9300, 0.9369, 0.9500, 0.8067, 0.9282],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 100.000
+ * Acc@1 90.077 Acc@5 98.706
+Epoch: [93][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.42 (3.42)	Cls Loss 0.17 (0.17)	Self Training Loss 0.20 (0.20)	supconloss Loss 3.06 (3.06)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 80.6 (80.6)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.8439, 0.8609, 0.7750, 0.8368, 0.8410, 0.8436, 0.8472, 0.7468, 0.7805],
+       device='cuda:0')
+ * Acc@1 96.296 Acc@5 100.000
+ * Acc@1 91.546 Acc@5 98.920
+Epoch: [94][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.83 (3.83)	Cls Loss 0.41 (0.41)	Self Training Loss 0.15 (0.15)	supconloss Loss 3.27 (3.27)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 96.6 (96.6)	Pseudo Label Ratio 90.6 (90.6)
+tensor([0.9127, 0.9071, 0.8146, 0.8489, 0.9137, 0.9026, 0.9203, 0.8797, 0.8482],
+       device='cuda:0')
+ * Acc@1 88.889 Acc@5 100.000
+ * Acc@1 91.433 Acc@5 98.304
+Epoch: [95][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 2.98 (2.98)	Cls Loss 0.03 (0.03)	Self Training Loss 0.11 (0.11)	supconloss Loss 2.85 (2.85)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.3 (90.3)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.9500, 0.9493, 0.8864, 0.9230, 0.9444, 0.9158, 0.9489, 0.9284, 0.9154],
+       device='cuda:0')
+ * Acc@1 92.593 Acc@5 100.000
+ * Acc@1 90.554 Acc@5 97.814
+Epoch: [96][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 3.08 (3.08)	Cls Loss 0.13 (0.13)	Self Training Loss 0.09 (0.09)	supconloss Loss 2.86 (2.86)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.3 (90.3)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.9379, 0.9150, 0.9082, 0.8787, 0.9100, 0.9345, 0.9500, 0.8896, 0.9342],
+       device='cuda:0')
+ * Acc@1 96.296 Acc@5 100.000
+ * Acc@1 91.496 Acc@5 98.581
+Epoch: [97][  0/100]	Time 0.32 (0.32)	Data 0.2 (0.2)	Loss 4.29 (4.29)	Cls Loss 0.48 (0.48)	Self Training Loss 0.12 (0.12)	supconloss Loss 3.69 (3.69)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 90.3 (90.3)	Pseudo Label Ratio 96.9 (96.9)
+tensor([0.9500, 0.9472, 0.9260, 0.8974, 0.9500, 0.8855, 0.9476, 0.8759, 0.9199],
+       device='cuda:0')
+ * Acc@1 92.593 Acc@5 100.000
+ * Acc@1 91.421 Acc@5 98.631
+Epoch: [98][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.35 (3.35)	Cls Loss 0.20 (0.20)	Self Training Loss 0.14 (0.14)	supconloss Loss 3.01 (3.01)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 84.4 (84.4)	Pseudo Label Ratio 100.0 (100.0)
+tensor([0.9404, 0.9500, 0.8606, 0.9021, 0.9378, 0.9238, 0.9280, 0.8119, 0.8949],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 100.000
+ * Acc@1 89.373 Acc@5 97.111
+Epoch: [99][  0/100]	Time 0.33 (0.33)	Data 0.2 (0.2)	Loss 3.26 (3.26)	Cls Loss 0.10 (0.10)	Self Training Loss 0.07 (0.07)	supconloss Loss 3.09 (3.09)	Cls Acc 100.0 (100.0)	Pseudo Label Acc 86.2 (86.2)	Pseudo Label Ratio 90.6 (90.6)
+tensor([0.9200, 0.9203, 0.8698, 0.8800, 0.9168, 0.8729, 0.9198, 0.8523, 0.8534],
+       device='cuda:0')
+ * Acc@1 85.185 Acc@5 96.296
+ * Acc@1 86.497 Acc@5 96.910
+best_acc_val = 96.3
+best acc test 91.496043
+best acc per:  99.29578 100.0 61.26761 86.51912 98.692154 88.37209 99.8994 79.02098 99.29578
+best f1:  88.76650428841418
+best f1 per:  99.54614220877458 99.54932398597897 70.12089810017271 87.04453441295547 98.99091826437942 92.12121212121212 99.05236907730674 64.38746438746439 88.08567603748327
+best recall:  90.2625434397462
+best precision:  88.40359401129582
